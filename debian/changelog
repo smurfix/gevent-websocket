@@ -1,3 +1,9 @@
+gevent-websocket (0.9.3+git1-c86e5d5fb-1) smurf; urgency=medium
+
+  * Merge current git top.
+
+ -- Matthias Urlichs <matthias@urlichs.de>  Sun, 28 Sep 2014 09:13:11 +0200
+
 gevent-websocket (0.9.3-1) unstable; urgency=medium
 
   * New upstream release.
