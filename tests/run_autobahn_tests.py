@@ -6,7 +6,10 @@ http://autobahn.ws/testsuite
 import sys
 import subprocess
 import time
-import urllib2
+try:
+    from urllib.request import urlopen
+except ImportError: # py2
+    from urllib2 import urlopen
 from twisted.python import log
 from twisted.internet import reactor
 from autobahntestsuite.fuzzing import FuzzingClientFactory
@@ -48,8 +51,8 @@ class ProcessPool(object):
             popen = self.popens.pop()
             try:
                 popen.kill()
-            except Exception, ex:
-                print ex
+            except Exception as ex:
+                print(ex)
 
 
 if __name__ == '__main__':
@@ -81,7 +84,7 @@ if __name__ == '__main__':
         pool.wait(1)
 
         if options.geventwebsocket:
-            agent = urllib2.urlopen('http://127.0.0.1:8000/version').read().strip()
+            agent = urlopen('http://127.0.0.1:8000/version').read().strip()
 
             assert agent and '\n' not in agent and 'gevent-websocket' in agent, agent
 
