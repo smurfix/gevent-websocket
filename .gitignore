@@ -1,0 +1,6 @@
+*.pyc
+*.pyo
+/tests/reports/
+/gevent_websocket.egg-info/
+__pycache__
+/.pybuild

@@ -1,0 +1,6 @@
+/files
+/python-gevent-websocket/
+/python3-gevent-websocket/
+*.log
+*.debhelper
+*.substvars
