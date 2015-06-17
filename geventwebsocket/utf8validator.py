@@ -30,6 +30,8 @@
 
 ## use Cython implementation of UTF8 validator if available
 ##
+from gevent.hub import PY3
+
 try:
     from wsaccel.utf8validator import Utf8Validator
 except:
@@ -114,10 +116,13 @@ except:
 
             l = len(ba)
 
-            for i in xrange(l):
+            for i in range(l):
                 ## optimized version of decode(), since we are not interested in actual code points
 
-                self.state = Utf8Validator.UTF8VALIDATOR_DFA[256 + (self.state << 4) + Utf8Validator.UTF8VALIDATOR_DFA[ord(ba[i])]]
+                c = ba[i]
+                if not PY3:
+                    c = ord(c)
+                self.state = Utf8Validator.UTF8VALIDATOR_DFA[256 + (self.state << 4) + Utf8Validator.UTF8VALIDATOR_DFA[c]]
 
                 if self.state == Utf8Validator.UTF8_REJECT:
                     self.i += i

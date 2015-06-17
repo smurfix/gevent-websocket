@@ -1,3 +1,9 @@
+gevent-websocket (0.9.3+git1-c86e5d5fb-2) smurf; urgency=medium
+
+  * Py3 fixes
+
+ -- Matthias Urlichs <matthias@urlichs.de>  Wed, 17 Jun 2015 08:56:16 +0200
+
 gevent-websocket (0.9.3+git1-c86e5d5fb-1) smurf; urgency=medium
 
   * Merge current git top.

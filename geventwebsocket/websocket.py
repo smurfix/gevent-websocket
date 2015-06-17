@@ -1,4 +1,6 @@
+from __future__ import print_function
 import struct
+from gevent.hub import text_type, string_types, PY3
 
 from socket import error
 
@@ -76,11 +78,8 @@ class WebSocket(object):
         :returns: The utf-8 byte string equivalent of `text`.
         """
 
-        if isinstance(text, str):
+        if not isinstance(text, text_type):
             return text
-
-        if not isinstance(text, unicode):
-            text = unicode(text or '')
 
         return text.encode('utf-8')
 
@@ -238,7 +237,7 @@ class WebSocket(object):
         if an exception is called. Use `receive` instead.
         """
         opcode = None
-        message = ""
+        message = b""
 
         while True:
             header, payload = self.read_frame()
@@ -286,7 +285,7 @@ class WebSocket(object):
 
         if opcode == self.OPCODE_TEXT:
             self.validate_utf8(message)
-            return message
+            return message.decode('utf-8')
         else:
             return bytearray(message)
 
@@ -323,9 +322,9 @@ class WebSocket(object):
         if opcode == self.OPCODE_TEXT:
             message = self._encode_bytes(message)
         elif opcode == self.OPCODE_BINARY:
-            message = str(message)
+            pass
 
-        header = Header.encode_header(True, opcode, '', len(message), 0)
+        header = Header.encode_header(True, opcode, b'', len(message), 0)
 
         try:
             self.raw_write(header + message)
@@ -337,7 +336,7 @@ class WebSocket(object):
         Send a frame over the websocket with message as its payload
         """
         if binary is None:
-            binary = not isinstance(message, (str, unicode))
+            binary = not isinstance(message, string_types)
 
         opcode = self.OPCODE_BINARY if binary else self.OPCODE_TEXT
 
@@ -420,10 +419,12 @@ class Header(object):
         payload = bytearray(payload)
         mask = bytearray(self.mask)
 
-        for i in xrange(self.length):
+        for i in range(self.length):
             payload[i] ^= mask[i % 4]
 
-        return str(payload)
+        if not PY3:
+            payload = str(payload)
+        return payload
 
     # it's the same operation
     unmask_payload = mask_payload
@@ -509,7 +510,7 @@ class Header(object):
         """
         first_byte = opcode
         second_byte = 0
-        extra = ''
+        extra = b''
 
         if fin:
             first_byte |= cls.FIN_MASK
@@ -540,4 +541,9 @@ class Header(object):
 
             extra += mask
 
-        return chr(first_byte) + chr(second_byte) + extra
+        if PY3:
+            s = bytes((first_byte,second_byte)) + extra
+        else:
+            s = chr(first_byte)+chr(second_byte) + extra
+        print("OUT",repr(s))
+        return s
