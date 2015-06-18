@@ -1,3 +1,9 @@
+gevent-websocket (0.9.3+git1-c86e5d5fb-3) smurf; urgency=medium
+
+  * more py3
+
+ -- Matthias Urlichs <matthias@urlichs.de>  Thu, 18 Jun 2015 15:46:19 +0200
+
 gevent-websocket (0.9.3+git1-c86e5d5fb-2) smurf; urgency=medium
 
   * Py3 fixes
