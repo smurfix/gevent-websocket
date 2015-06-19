@@ -1,3 +1,9 @@
+gevent-websocket (0.9.3+git1-c86e5d5fb-4) smurf; urgency=medium
+
+  * debug print removed
+
+ -- Matthias Urlichs <matthias@urlichs.de>  Fri, 19 Jun 2015 03:02:07 +0200
+
 gevent-websocket (0.9.3+git1-c86e5d5fb-3) smurf; urgency=medium
 
   * more py3

@@ -545,5 +545,4 @@ class Header(object):
             s = bytes((first_byte,second_byte)) + extra
         else:
             s = chr(first_byte)+chr(second_byte) + extra
-        print("OUT",repr(s))
         return s
