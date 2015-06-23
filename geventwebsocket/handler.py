@@ -216,7 +216,7 @@ class WebSocketHandler(WSGIHandler):
             ("Upgrade", "websocket"),
             ("Connection", "Upgrade"),
             ("Sec-WebSocket-Accept", base64.b64encode(
-                hashlib.sha1((key + self.GUID).encode('utf-8')).digest())),
+                hashlib.sha1((key + self.GUID).encode('utf-8')).digest()).decode('utf-8')),
         ]
 
         if protocol:
